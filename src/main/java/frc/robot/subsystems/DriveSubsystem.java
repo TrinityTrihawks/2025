@@ -15,7 +15,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 public class DriveSubsystem extends SubsystemBase {
   private final SparkMax m_frontLeft = new SparkMax(11, MotorType.kBrushless);
-  private final SparkMax m_rearLeft = new SparkMax(12, MotorType.kBrushless);
+  private final SparkMax m_rearLeft = new SparkMax(15, MotorType.kBrushless);
   private final SparkMax m_frontRight = new SparkMax(13, MotorType.kBrushless);
   private final SparkMax m_rearRight = new SparkMax(14, MotorType.kBrushless);
 
