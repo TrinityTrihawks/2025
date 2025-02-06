@@ -17,9 +17,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 public class ArmSubsystem extends SubsystemBase {
-  private final SparkMax m_arm = new SparkMax(10, MotorType.kBrushless);
-  private RelativeEncoder encoder1;
-  private RelativeEncoder encoder2;
+  // private final SparkMax m_arm = new SparkMax(10, MotorType.kBrushless);
+  // private RelativeEncoder encoder1;
+  // private RelativeEncoder encoder2;
 
   private final SparkMax m_grip = new SparkMax(17, MotorType.kBrushless);
   private RelativeEncoder grip_encoder;
@@ -39,8 +39,8 @@ public class ArmSubsystem extends SubsystemBase {
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
   public ArmSubsystem() {
-    encoder1 = m_arm.getEncoder();            // motor encoder
-    encoder2 = m_arm.getAlternateEncoder();   // secondary encoder
+    // encoder1 = m_arm.getEncoder();            // motor encoder
+    // encoder2 = m_arm.getAlternateEncoder();   // secondary encoder
     
     grip_encoder = m_grip.getEncoder();
 
@@ -66,29 +66,29 @@ public class ArmSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
-  public void armUp(double speed) {
-    m_arm.setVoltage(speed);
-  }
+  // public void armUp(double speed) {
+  //   m_arm.setVoltage(speed);
+  // }
   
-  public void armDown(double speed) {
-    m_arm.setVoltage(-speed);
-  }
+  // public void armDown(double speed) {
+  //   m_arm.setVoltage(-speed);
+  // }
 
-  public double pos1(){
-    return encoder1.getPosition();
-  }
+  // public double pos1(){
+  //   return encoder1.getPosition();
+  // }
 
-  public double pos2(){
-    return encoder2.getPosition();
-  }
+  // public double pos2(){
+  //   return encoder2.getPosition();
+  // }
   
-  public double vel1(){
-    return encoder1.getVelocity();
-  }
+  // public double vel1(){
+  //   return encoder1.getVelocity();
+  // }
   
-  public double vel2(){
-    return encoder2.getVelocity();
-  }
+  // public double vel2(){
+  //   return encoder2.getVelocity();
+  // }
 
   public double grip_vel(){
     return grip_encoder.getVelocity();

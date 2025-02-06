@@ -13,6 +13,7 @@ import frc.robot.commands.StagedPitch;
 import frc.robot.commands.WristTurn;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -88,13 +89,13 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-     m_driverController.a().toggleOnTrue(new StagedPitch(m_robotArm,1,0));
+     m_driverController.a().whileTrue(new StagedPitch(m_robotArm,1,0));
      m_driverController.b().toggleOnTrue(new StagedPitch(m_robotArm,1,0.88));
      m_driverController.x().toggleOnTrue(new StagedPitch(m_robotArm,1,0.63));
-     m_driverController.leftBumper().whileTrue(new WristTurn(m_robotArm,4, 0));
-     m_driverController.rightBumper().whileTrue(new WristTurn(m_robotArm,4, 0.75));
-     m_driverController.rightTrigger().whileTrue(new GripperIntake(m_robotArm,4));
-     m_driverController.leftTrigger().whileTrue(new GripperIntake(m_robotArm,-4));
+     m_driverController.leftBumper().whileTrue(new WristTurn(m_robotArm,1, 0));
+     m_driverController.rightBumper().whileTrue(new WristTurn(m_robotArm,1, 0.75));
+     m_driverController.rightTrigger().whileTrue(new GripperIntake(m_robotArm,1));
+     m_driverController.leftTrigger().whileTrue(new GripperIntake(m_robotArm,-1));
   }
 
   /**

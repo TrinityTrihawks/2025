@@ -34,24 +34,24 @@ public class StagedPitch extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (targ_position > curr_pos){
-      direction = -1;
+    // if (targ_position > curr_pos){
+    //   direction = -1;
       
-    }
-    else if (curr_pos > targ_position){
-      direction = 1;
-    }
+    // }
+    // else if (curr_pos > targ_position){
+    //   direction = 1;
+    // }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.staged_pitch(direction * staged_speed);
-    curr_pos = m_subsystem.get_pitch_encoder2();
-    if (Math.abs(curr_pos - targ_position) <= 0.01){
-      m_subsystem.staged_pitch(0);
+    m_subsystem.staged_pitch(staged_speed);
+    // curr_pos = m_subsystem.get_pitch_encoder2();
+    // if (Math.abs(curr_pos - targ_position) <= 0.01){
+    //   m_subsystem.staged_pitch(0);
 
-    }
+    // }
   }
 
   // Called once the command ends or is interrupted.
