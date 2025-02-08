@@ -21,10 +21,10 @@ public class WristTurn extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public WristTurn(ArmSubsystem subsystem, double velocity, double position) {
+  public WristTurn(ArmSubsystem subsystem, double velocity) {
     m_subsystem = subsystem;
     vel=velocity;
-    target_pos = position;
+    //target_pos = position;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -58,7 +58,7 @@ public class WristTurn extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_subsystem.grip(0);
+    m_subsystem.turn_wrist(0);
   }
 
   // Returns true when the command should end.

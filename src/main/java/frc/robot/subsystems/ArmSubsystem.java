@@ -21,16 +21,18 @@ public class ArmSubsystem extends SubsystemBase {
   // private RelativeEncoder encoder1;
   // private RelativeEncoder encoder2;
 
-  private final SparkMax m_grip = new SparkMax(17, MotorType.kBrushless);
+  private final SparkMax m_grip = new SparkMax(18, MotorType.kBrushless);
   private RelativeEncoder grip_encoder;
   
-  private final SparkMax m_wrist = new SparkMax(15, MotorType.kBrushless);
+  private final SparkMax m_wrist = new SparkMax(17, MotorType.kBrushless);
   private RelativeEncoder wrist_encoder1;
   private RelativeEncoder wrist_encoder2;
-  private final SparkMax m_staged = new SparkMax(14, MotorType.kBrushless);
+  private final SparkMax m_staged = new SparkMax(16, MotorType.kBrushless);
   private RelativeEncoder staged_encoder1;
   private RelativeEncoder staged_encoder2;
   private SparkMaxConfig wristConfig;
+  private final SparkMax m_climb = new SparkMax(15, MotorType.kBrushless);
+  private final SparkMax m_tele = new SparkMax(19, MotorType.kBrushless);
   
 
   private final SparkMaxConfig configarm = new SparkMaxConfig();
@@ -122,4 +124,14 @@ public class ArmSubsystem extends SubsystemBase {
   public void staged_pitch(double staged_speed) {
     m_staged.setVoltage(staged_speed);
   }
+
+  public void climb(double climb_speed) {
+    m_climb.setVoltage(climb_speed);
+  }
+  public void telescoping(double telescope_speed) {
+    m_tele.setVoltage(telescope_speed);
+
+  }
 }
+
+
