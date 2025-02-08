@@ -19,7 +19,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 public class ArmSubsystem extends SubsystemBase {
   
-  private final SparkMax m_arm = new SparkMax(10, MotorType.kBrushless);
+  private final SparkMax m_arm = new SparkMax(15, MotorType.kBrushless);
   private RelativeEncoder encoder1;
   private RelativeEncoder encoder2;
 

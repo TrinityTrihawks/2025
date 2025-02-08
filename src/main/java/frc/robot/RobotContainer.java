@@ -6,12 +6,12 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
+//import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.GripperIntake;
-import frc.robot.commands.MoveRobot;
+//import frc.robot.commands.MoveRobot;
 import frc.robot.commands.WristTurn;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.DriveSubsystem;
+//import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+ // private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ArmSubsystem m_robotArm = new ArmSubsystem();
   private double Y;
   private double X;
@@ -38,7 +38,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     configureBindings();
-    m_robotDrive.setDefaultCommand(new MoveRobot(m_robotDrive, m_driverController));
+    //m_robotDrive.setDefaultCommand(new MoveRobot(m_robotDrive, m_driverController));
   }
 
   private void configureBindings() {
