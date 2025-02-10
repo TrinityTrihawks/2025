@@ -91,8 +91,8 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-     m_driverController.a().whileTrue(new StagedPitch(m_robotArm,0.5));
-     m_driverController.b().whileTrue(new StagedPitch(m_robotArm,-0.5));
+     m_driverController.a().whileTrue(new StagedPitch(m_robotArm,3));
+     m_driverController.b().whileTrue(new StagedPitch(m_robotArm,-3));
     // m_driverController.x().toggleOnTrue(new StagedPitch(m_robotArm,1));
      m_driverController.leftBumper().whileTrue(new WristTurn(m_robotArm,-1));
      m_driverController.rightBumper().whileTrue(new WristTurn(m_robotArm,1));
