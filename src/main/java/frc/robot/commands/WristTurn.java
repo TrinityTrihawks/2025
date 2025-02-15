@@ -15,16 +15,18 @@ public class WristTurn extends Command {
   private double vel;
   private double target_pos;
   private double curr_pos;
+  private double speed_ratio;
   private double direction;
+  private double error;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public WristTurn(Claw subsystem, double velocity, double position) {
+  public WristTurn(Claw subsystem, double output, double position) {
     m_subsystem = subsystem;
-    vel=velocity;
+    vel=output;
     target_pos = position;
     
 
@@ -35,26 +37,20 @@ public class WristTurn extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    curr_pos = m_subsystem.get_wrist_encoder2();
-  //   if (target_pos > curr_pos){
-  //     direction = -1;
-      
-  //   }
-  //   else if (curr_pos > target_pos){
-  //     direction = 1;
-  //   }
-   }
-
-
+  
+  }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.turn_wrist(vel);
     curr_pos = m_subsystem.get_wrist_encoder2();
-    // if (Math.abs(curr_pos - target_pos) <= 0.01){
-    //   m_subsystem.turn_wrist(0);
+    speed_ratio = 1; // This is the ratio of which defines the speed so change to aclimate the encoder values
+    error = curr_pos - target_pos;
+    vel = speed_ratio * error;
+    m_subsystem.turn_wrist(vel);
+    if (Math.abs(error) <= 0.01){
+      m_subsystem.turn_wrist(0);
 
-    // }
+    }
   }
     
 
