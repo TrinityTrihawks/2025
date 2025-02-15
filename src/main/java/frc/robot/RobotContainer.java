@@ -123,21 +123,21 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-     m_SubdriverController.a().whileTrue(new StagedPitch(m_robotArm,3,0));
-     m_SubdriverController.b().whileTrue(new StagedPitch(m_robotArm,-3,0.88));
+     m_SubdriverController.a().whileTrue(new StagedPitch(m_robotArm,5,0));
+     m_SubdriverController.b().whileTrue(new StagedPitch(m_robotArm,-5,0.88));
     //  m_SubdriverController.x().whileTrue(new StagedPitch(m_robotArm,pitch_speed,0.63));
 
      m_SubdriverController.leftBumper().whileTrue(new WristTurn(m_claw,1, 0));
      m_SubdriverController.rightBumper().whileTrue(new WristTurn(m_claw,-1, 0.75));
 
-     m_SubdriverController.rightTrigger().whileTrue(new GripperIntake(m_claw,-5));
-     m_SubdriverController.leftTrigger().whileTrue(new GripperIntake(m_claw,7));
+     m_SubdriverController.rightTrigger().whileTrue(new GripperIntake(m_claw,7));
+     m_SubdriverController.leftTrigger().whileTrue(new GripperIntake(m_claw,-5));
 
-     m_SubdriverController.x().whileTrue(new Climb(m_robotArm,6));
-     m_SubdriverController.y().whileTrue(new Climb(m_robotArm,-1 * 6));
+     m_SubdriverController.x().whileTrue(new Telescope(m_robotArm,2.5));
+     m_SubdriverController.y().whileTrue(new Telescope(m_robotArm,-1 * 2.5));
 
-     m_SubdriverController.rightStick().whileTrue(new Telescope(m_robotArm,3));
-     m_SubdriverController.leftStick().whileTrue(new Telescope(m_robotArm,-1 * 3));
+     m_SubdriverController.rightStick().whileTrue(new Climb(m_robotArm,-6));
+     m_SubdriverController.leftStick().whileTrue(new Climb(m_robotArm, 6));
   }
 
   /**

@@ -16,8 +16,8 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
 
-    public static final double straightmax = .4;
-    public static final double strafemax = .3; /* NB: This is NOT strafe. This is actually rotation. */
-    public static final double turnmax = .4;   /* NB: This is NOT turn/rotate. This is actually strafe. */
+    public static final double straightmax = .7;
+    public static final double strafemax = .6; /* NB: This is NOT strafe. This is actually rotation. */
+    public static final double turnmax = .7;   /* NB: This is NOT turn/rotate. This is actually strafe. */
   }
 }
