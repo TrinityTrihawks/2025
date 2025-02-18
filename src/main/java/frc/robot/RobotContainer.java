@@ -106,6 +106,7 @@ public class RobotContainer {
     SmartDashboard.putNumber("Pitch Alt Encoder", m_robotArm.get_pitch_encoder2());
     SmartDashboard.putNumber("Wrist Motor Encoder", m_claw.get_wrist_encoder1());
     SmartDashboard.putNumber("Wrist Alt Encoder", m_claw.get_wrist_encoder2());
+    SmartDashboard.putNumber("Tele Motor Encoder", m_robotArm.get_tele_encoder1());
 
   }
 
@@ -133,18 +134,20 @@ public class RobotContainer {
      m_SubdriverController.rightBumper().whileTrue(new WristTurnTarget(m_claw, 0, 1));
 
      m_SubdriverController.rightTrigger().whileTrue(new GripperIntake(m_claw,-5));
-     m_SubdriverController.leftTrigger().whileTrue(new GripperIntake(m_claw,7));
+     m_SubdriverController.leftTrigger().whileTrue(new GripperIntake(m_claw,5));
 
-     m_SubdriverController.x().whileTrue(new Climb(m_robotArm,6));
-     m_SubdriverController.y().whileTrue(new Climb(m_robotArm,-1 * 6));
+     m_SubdriverController.y().whileTrue(new Climb(m_robotArm,6));
+     m_SubdriverController.x().whileTrue(new Climb(m_robotArm,-1 * 6));
 
-     m_SubdriverController.rightStick().whileTrue(new Telescope(m_robotArm,3));
-     m_SubdriverController.leftStick().whileTrue(new Telescope(m_robotArm,-1 * 3));
+     m_SubdriverController.x().whileTrue(new Telescope(m_robotArm,3));
+     m_SubdriverController.y().whileTrue(new Telescope(m_robotArm,-1 * 3));
 
-     m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_robotArm, 0, 3));
-     m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_robotArm, 10, 3));
-     m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_robotArm, 30, 3));
+     m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_robotArm, 16, 3)); // L1 scoring
+     m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_robotArm, 65, 3)); // L2 scoring
+     m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_robotArm, 45, 3)); // L3 scoring
+     m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_robotArm, 0, 3)); // retract arm
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
