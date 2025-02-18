@@ -13,7 +13,9 @@ import frc.robot.commands.GripperIntake;
 import frc.robot.commands.MoveRobot;
 import frc.robot.commands.StagedPitch;
 import frc.robot.commands.Telescope;
+import frc.robot.commands.TelescopeTarget;
 import frc.robot.commands.WristTurn;
+import frc.robot.commands.WristTurnTarget;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.DriveSubsystem;
@@ -127,8 +129,8 @@ public class RobotContainer {
      m_SubdriverController.b().whileTrue(new StagedPitch(m_robotArm,-3,0.88));
     //  m_SubdriverController.x().whileTrue(new StagedPitch(m_robotArm,pitch_speed,0.63));
 
-     m_SubdriverController.leftBumper().whileTrue(new WristTurn(m_claw,1, 0));
-     m_SubdriverController.rightBumper().whileTrue(new WristTurn(m_claw,-1, 0.75));
+     m_SubdriverController.leftBumper().whileTrue(new WristTurnTarget(m_claw,0.5, 1));
+     m_SubdriverController.rightBumper().whileTrue(new WristTurnTarget(m_claw, 0, 1));
 
      m_SubdriverController.rightTrigger().whileTrue(new GripperIntake(m_claw,-5));
      m_SubdriverController.leftTrigger().whileTrue(new GripperIntake(m_claw,7));
@@ -138,6 +140,10 @@ public class RobotContainer {
 
      m_SubdriverController.rightStick().whileTrue(new Telescope(m_robotArm,3));
      m_SubdriverController.leftStick().whileTrue(new Telescope(m_robotArm,-1 * 3));
+
+     m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_robotArm, 0, 3));
+     m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_robotArm, 10, 3));
+     m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_robotArm, 30, 3));
   }
 
   /**

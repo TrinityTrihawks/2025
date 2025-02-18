@@ -26,6 +26,7 @@ public class ArmSubsystem extends SubsystemBase {
   private AbsoluteEncoder staged_encoder2;
   
   private final SparkMax m_tele = new SparkMax(19, MotorType.kBrushless);
+  private RelativeEncoder tele_encoder1;
   private SparkMaxConfig wristConfig;
   
 
@@ -39,6 +40,7 @@ public class ArmSubsystem extends SubsystemBase {
     climb_encoder1 = m_climb.getEncoder();
     staged_encoder1 = m_staged.getEncoder();
     staged_encoder2 = m_staged.getAbsoluteEncoder();
+    tele_encoder1 = m_tele.getEncoder();
     
     
    // m_wrist_pidController = m_wrist.getClosedLoopController();
@@ -69,6 +71,9 @@ public class ArmSubsystem extends SubsystemBase {
   }
   public void staged_pitch(double staged_speed) {
     m_staged.setVoltage(staged_speed);
+  }
+  public double get_tele_encoder1(){
+    return tele_encoder1.getPosition();
   }
   public double get_climb_encoder1(){
     return climb_encoder1.getPosition();
