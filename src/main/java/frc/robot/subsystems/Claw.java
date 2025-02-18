@@ -19,7 +19,11 @@ public class Claw extends SubsystemBase {
   
   private final SparkMax m_wrist = new SparkMax(17, MotorType.kBrushless);
   private RelativeEncoder wrist_encoder1;
+<<<<<<< HEAD
   private RelativeEncoder wrist_encoder2;
+=======
+  private AlternateEncoder wrist_encoder2;
+>>>>>>> 2c6e436526f85542b799e7f74569062fafa98f4c
   
   /** Creates a new ExampleSubsystem. */
   public Claw() {
