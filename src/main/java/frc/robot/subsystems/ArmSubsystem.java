@@ -20,12 +20,13 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 public class ArmSubsystem extends SubsystemBase {
   private final SparkMax m_climb = new SparkMax(15, MotorType.kBrushless);
   private RelativeEncoder climb_encoder1;
-  private AbsoluteEncoder climb_encoder2;
+  private RelativeEncoder climb_encoder2;
   private final SparkMax m_staged = new SparkMax(16, MotorType.kBrushless);
   private RelativeEncoder staged_encoder1;
-  private AbsoluteEncoder staged_encoder2;
+  private RelativeEncoder staged_encoder2;
   
   private final SparkMax m_tele = new SparkMax(19, MotorType.kBrushless);
+  private RelativeEncoder tele_encoder1;
   private SparkMaxConfig wristConfig;
   
 
@@ -35,10 +36,11 @@ public class ArmSubsystem extends SubsystemBase {
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
   public ArmSubsystem() {
-    climb_encoder2 = m_climb.getAbsoluteEncoder();
+    climb_encoder2 = m_climb.getAlternateEncoder();
     climb_encoder1 = m_climb.getEncoder();
     staged_encoder1 = m_staged.getEncoder();
-    staged_encoder2 = m_staged.getAbsoluteEncoder();
+    staged_encoder2 = m_staged.getAlternateEncoder();
+    tele_encoder1 = m_tele.getEncoder();
     
     
    // m_wrist_pidController = m_wrist.getClosedLoopController();
@@ -81,5 +83,8 @@ public class ArmSubsystem extends SubsystemBase {
   }
   public void telescope(double telescope_speed) {
     m_tele.setVoltage(telescope_speed);
+  }
+  public double get_tele_encoder1(){
+    return tele_encoder1.getPosition();
   }
 }

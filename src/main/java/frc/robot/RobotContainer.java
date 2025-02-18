@@ -104,6 +104,8 @@ public class RobotContainer {
     SmartDashboard.putNumber("Pitch Alt Encoder", m_robotArm.get_pitch_encoder2());
     SmartDashboard.putNumber("Wrist Motor Encoder", m_claw.get_wrist_encoder1());
     SmartDashboard.putNumber("Wrist Alt Encoder", m_claw.get_wrist_encoder2());
+    SmartDashboard.putNumber("Tele Motor Encoder", m_robotArm.get_tele_encoder1());
+
 
   }
 
@@ -123,8 +125,8 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-     m_SubdriverController.a().whileTrue(new StagedPitch(m_robotArm,5,0));
-     m_SubdriverController.b().whileTrue(new StagedPitch(m_robotArm,-5,0.88));
+     m_SubdriverController.a().whileTrue(new StagedPitch(m_robotArm,6.5,0));
+     m_SubdriverController.b().whileTrue(new StagedPitch(m_robotArm,-6.5,0.88));
     //  m_SubdriverController.x().whileTrue(new StagedPitch(m_robotArm,pitch_speed,0.63));
 
      m_SubdriverController.leftBumper().whileTrue(new WristTurn(m_claw,1, 0));
@@ -136,9 +138,10 @@ public class RobotContainer {
      m_SubdriverController.x().whileTrue(new Telescope(m_robotArm,2.5));
      m_SubdriverController.y().whileTrue(new Telescope(m_robotArm,-1 * 2.5));
 
-     m_SubdriverController.rightStick().whileTrue(new Climb(m_robotArm,-6));
-     m_SubdriverController.leftStick().whileTrue(new Climb(m_robotArm, 6));
+    //  
+    
   }
+  //push this code it is already commited
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
