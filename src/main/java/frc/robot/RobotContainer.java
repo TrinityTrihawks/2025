@@ -61,6 +61,9 @@ public class RobotContainer {
 
     m_robotDrive.setDefaultCommand(
         new MoveRobot(m_robotDrive, m_driverController));
+    for (SmartDashboardConstants robotDefault: SmartDashboardConstants.values()) {
+        robotDefault.setSmartDashboardDefault();
+    }
     SmartDashboard.putNumber("Pitch Speed", 1);
     SmartDashboard.putNumber("Wrist Speed", 1);
     SmartDashboard.putNumber("Intake Speed", 1);
@@ -133,19 +136,19 @@ public class RobotContainer {
      m_SubdriverController.leftBumper().whileTrue(new WristTurnTarget(m_claw,0.5, 1));
      m_SubdriverController.rightBumper().whileTrue(new WristTurnTarget(m_claw, 0, 1));
 
-     m_SubdriverController.rightTrigger().whileTrue(new GripperIntake(m_claw,5));
-     m_SubdriverController.leftTrigger().whileTrue(new GripperIntake(m_claw,-5));
+     m_SubdriverController.rightTrigger().whileTrue(new GripperIntake(m_claw, false));
+     m_SubdriverController.leftTrigger().whileTrue(new GripperIntake(m_claw, true));
 
     //  m_driverController.x().whileTrue(new Climb(m_robotArm,6));
     //  m_driverController.y().whileTrue(new Climb(m_robotArm,-1 * 6));
 
-     m_SubdriverController.x().whileTrue(new Telescope(m_robotArm,7));
-     m_SubdriverController.y().whileTrue(new Telescope(m_robotArm,-1 * 7));
+     m_SubdriverController.x().whileTrue(new Telescope(m_robotArm, false));
+     m_SubdriverController.y().whileTrue(new Telescope(m_robotArm, true));
 
-     m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_robotArm, 16, 3)); // L1 scoring
-     m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_robotArm, 65, 3)); // L2 scoring
-     m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_robotArm, 45, 3)); // L3 scoring
-     m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_robotArm, 0, 3)); // retract arm
+     m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_robotArm, () -> SmartDashboardConstants.TELESCOPE_TARGET_POSITION_L1.getSmartDashboardValue())); // L1 scoring
+     m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_robotArm, () -> SmartDashboardConstants.TELESCOPE_TARGET_POSITION_L2.getSmartDashboardValue())); // L2 scoring
+     m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_robotArm, () -> SmartDashboardConstants.TELESCOPE_TARGET_POSITION_L3.getSmartDashboardValue())); // L3 scoring
+     m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_robotArm, () -> SmartDashboardConstants.TELESCOPE_TARGET_POSITION_RETRACT.getSmartDashboardValue())); // retract arm
   }
 
 

@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.SmartDashboardConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Claw;
 
@@ -8,16 +9,17 @@ public class Telescope extends Command{
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ArmSubsystem m_subsystem;
   private double vel;
+  private boolean reverse;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public Telescope(ArmSubsystem subsystem, double velocity) {
+  public Telescope(ArmSubsystem subsystem, boolean reverse) {
     m_subsystem = subsystem;
-    vel=velocity;
-
+    this.vel=SmartDashboardConstants.TELESCOPE_VELOCITY.getSmartDashboardValue();
+    this.reverse = reverse;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -31,7 +33,8 @@ public class Telescope extends Command{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.telescope(vel);
+    double velocity = (reverse ? -1 : 1) * SmartDashboardConstants.TELESCOPE_VELOCITY.getSmartDashboardValue();
+    m_subsystem.telescope(velocity);
   }
 
   // Called once the command ends or is interrupted.
@@ -45,7 +48,6 @@ public class Telescope extends Command{
   public boolean isFinished() {
     return false;
   }
-  private void Plz() {}
 }
 
 

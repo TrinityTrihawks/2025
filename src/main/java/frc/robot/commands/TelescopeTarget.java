@@ -1,18 +1,22 @@
 package frc.robot.commands;
 
+import frc.robot.SmartDashboardConstants;
 import frc.robot.subsystems.ArmSubsystem;
+
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class TelescopeTarget extends Command {
     private final ArmSubsystem m_subsystem;
-    private final double target_pos;
+    private final DoubleSupplier target_pos;
     private final double max_output;
     private static final double TOLERANCE = 1;
   
-    public TelescopeTarget(ArmSubsystem subsystem, double targetPosition, double maxOutput) {
+    public TelescopeTarget(ArmSubsystem subsystem, DoubleSupplier targetPosition) {
       m_subsystem = subsystem;
       target_pos = targetPosition;
-      max_output = maxOutput;
+      max_output = SmartDashboardConstants.TELESCOPE_TARGET_MAX_OUTPUT.getSmartDashboardValue();
       addRequirements(m_subsystem);
     }
   
@@ -25,7 +29,7 @@ public class TelescopeTarget extends Command {
     @Override
     public void execute() {
       double curr_pos = m_subsystem.get_tele_encoder1();
-      double error = target_pos - curr_pos;
+      double error = target_pos.getAsDouble() - curr_pos;
       double output = calculateOutput(error);
   
       if (Math.abs(error) <= TOLERANCE) {
