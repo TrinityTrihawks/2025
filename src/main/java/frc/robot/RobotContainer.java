@@ -12,6 +12,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.GripperIntake;
 import frc.robot.commands.MoveRobot;
 import frc.robot.commands.StagedPitch;
+import frc.robot.commands.StagedPitchTarget;
 import frc.robot.commands.Telescope;
 import frc.robot.commands.TelescopeTarget;
 import frc.robot.commands.WristTurn;
@@ -74,7 +75,7 @@ public class RobotContainer {
   void moveRobot() {
     double threshold = 0.1;
     double leftY = m_driverController.getLeftY() * OperatorConstants.straightmax;
-    double rightX = m_driverController.getRightX() * OperatorConstants.strafemax;
+    double rightX = m_driverController.getRightX() * OperatorConstants.rotationemax;
     double leftX = m_driverController.getLeftX() * OperatorConstants.turnmax;
 
     if(leftY < threshold && leftY > -threshold){
@@ -142,10 +143,17 @@ public class RobotContainer {
      m_SubdriverController.x().whileTrue(new Telescope(m_robotArm,7));
      m_SubdriverController.y().whileTrue(new Telescope(m_robotArm,-1 * 7));
 
-     m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_robotArm, 16, 3)); // L1 scoring
-     m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_robotArm, 65, 3)); // L2 scoring
-     m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_robotArm, 45, 3)); // L3 scoring
-     m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_robotArm, 0, 3)); // retract arm
+     m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_robotArm, 16, 3).alongWith(
+      new StagedPitchTarget(m_robotArm, 12, 0))); // L1 scoring and set position to needed for pit
+
+     m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_robotArm, 65, 3).alongWith(
+      new StagedPitchTarget(m_robotArm, 12, 0))); // L2 scoring and set position to needed for pit
+
+     m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_robotArm, 45, 3).alongWith(
+      new StagedPitchTarget(m_robotArm, 12, 0))); // L3 scoring and set position to needed for pit
+
+     m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_robotArm, 0, 3).alongWith(
+      new StagedPitchTarget(m_robotArm, 12, 0))); // intake from station and set position to needed for pit and tele
   }
 
 
@@ -155,7 +163,11 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   Command autoCommand () {
-    return new AutoDrive(m_robotDrive, 2);
+    return new AutoDrive(m_robotDrive, 2).andThen(
+      new StagedPitchTarget(m_robotArm, 3 ,0.75)).andThen(
+      new WristTurnTarget(m_claw, 0.5, 1)).andThen(
+      new GripperIntake(m_claw, -5));
+    
   }
   
 }

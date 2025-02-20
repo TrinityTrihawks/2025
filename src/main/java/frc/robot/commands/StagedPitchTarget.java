@@ -21,9 +21,9 @@ public class StagedPitchTarget extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public StagedPitchTarget(ArmSubsystem subsystem, double speed, double pos) {
+  public StagedPitchTarget(ArmSubsystem subsystem, double max, double pos) {
     m_subsystem = subsystem;
-    max_output = speed;
+    max_output = max;
     target_pos = pos;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);

@@ -49,7 +49,7 @@ public class MoveRobot extends Command {
     turn = controller.getLeftX();
 
     Y = Math.pow(straight, 3) * OperatorConstants.straightmax;
-    X = Math.pow(strafe, 3) * OperatorConstants.strafemax;
+    X = Math.pow(strafe, 3) * OperatorConstants.rotationemax;
     R = Math.pow(turn, 3) * OperatorConstants.turnmax;
 
     if(Y < threshold && Y > -threshold){
