@@ -20,6 +20,7 @@ import frc.robot.commands.WristTurnTarget;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -38,6 +39,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final SendableChooser<String> autoChooser = new SendableChooser<>();
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ArmSubsystem m_robotArm = new ArmSubsystem();
   private final Claw m_claw = new Claw();
@@ -59,6 +61,9 @@ public class RobotContainer {
     // Configure the trigger00 bindings
     configureBindings();
     System.out.print("something");
+
+    autoChooser.setDefaultOption("Default Auto", "Auto Drive");  // Default option
+        autoChooser.addOption("Auto Mode 1", "Full Routine");
 
     m_robotDrive.setDefaultCommand(
         new MoveRobot(m_robotDrive, m_driverController));
@@ -162,12 +167,15 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  Command autoCommand () {
+  Command autoRoutine () {
     return new AutoDrive(m_robotDrive, 2).andThen(
       new StagedPitchTarget(m_robotArm, 3 ,0.75)).andThen(
       new WristTurnTarget(m_claw, 0.5, 1)).andThen(
       new GripperIntake(m_claw, -5));
     
+  }
+  Command AutoLeave() {
+    return new AutoDrive(m_robotDrive, 2);
   }
   
 }
