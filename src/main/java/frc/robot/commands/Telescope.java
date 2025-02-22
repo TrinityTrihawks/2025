@@ -8,6 +8,9 @@ public class Telescope extends Command{
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ArmSubsystem m_subsystem;
   private double vel;
+  private double curr_pos;
+  private double LowLim;
+  private double UpLim;
 
   /**
    * Creates a new ExampleCommand.
@@ -31,7 +34,13 @@ public class Telescope extends Command{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.telescope(vel);
+    curr_pos = m_subsystem.get_tele_encoder1();
+    if ((vel > 0 && curr_pos < UpLim) || (vel < 0 && curr_pos > LowLim)) {
+      m_subsystem.telescope(vel);
+    } else {
+      m_subsystem.telescope(0);
+    }
+    
   }
 
   // Called once the command ends or is interrupted.

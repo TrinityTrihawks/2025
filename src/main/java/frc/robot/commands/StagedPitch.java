@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class StagedPitch extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ArmSubsystem m_subsystem;
-  private double staged_speed;
+  private double vel;
   private double curr_pos;
-  private double direction;
-  private double targ_position;
+  private double UpLim;
+  private double LowLim;
 
   /**
    * Creates a new ExampleCommand.
@@ -25,8 +25,8 @@ public class StagedPitch extends Command {
    */
   public StagedPitch(ArmSubsystem subsystem, double speed, double pos) {
     m_subsystem = subsystem;
-    staged_speed = speed;
-    targ_position = pos;
+    vel = speed;
+    
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -34,25 +34,20 @@ public class StagedPitch extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // curr_pos = m_subsystem.get_pitch_encoder2();
-    // if (targ_position > curr_pos){
-    //   direction = -1;
-      
-    // }
-    // else if (curr_pos > targ_position){
-    //   direction = 1;
-    // }
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.staged_pitch(staged_speed);
-    // curr_pos = m_subsystem.get_pitch_encoder2();
-    // if (Math.abs(curr_pos - targ_position) <= 0.01){
-    //   m_subsystem.staged_pitch(0);
-
-    // }
+    curr_pos = m_subsystem.get_pitch_encoder2();
+    if ((vel > 0 && curr_pos < UpLim) || (vel < 0 && curr_pos > LowLim)) {
+      m_subsystem.staged_pitch(vel);
+    } else {
+      m_subsystem.staged_pitch(0);
+    }
+    
+    
   }
 
   // Called once the command ends or is interrupted.

@@ -7,6 +7,9 @@ import frc.robot.subsystems.Claw;
 public class Climb extends Command{
     private final ArmSubsystem m_subsystem;
   private double vel;
+  private double curr_pos;
+  private double UpLim = 0;
+  private double LowLim = 10;
 
   /**
    * Creates a new ExampleCommand.
@@ -30,7 +33,13 @@ public class Climb extends Command{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_subsystem.climb(vel);
+    curr_pos = m_subsystem.get_climb_encoder2();
+    if ((vel > 0 && curr_pos < UpLim) || (vel < 0 && curr_pos > LowLim)) {
+      m_subsystem.climb(vel);
+    } else {
+      m_subsystem.climb(0);
+    }
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -43,10 +52,6 @@ public class Climb extends Command{
   @Override
   public boolean isFinished() {
     return false;
-  }
-  // Please commit
-  private void Plz() {
-    
   }
 }
 
