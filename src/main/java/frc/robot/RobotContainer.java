@@ -142,23 +142,23 @@ public class RobotContainer {
      m_SubdriverController.rightTrigger().whileTrue(new GripperIntake(m_claw,5));
      m_SubdriverController.leftTrigger().whileTrue(new GripperIntake(m_claw,-5));
 
-    //  m_driverController.x().whileTrue(new Climb(m_robotArm,6));
-    //  m_driverController.y().whileTrue(new Climb(m_robotArm,-1 * 6));
+     m_driverController.x().whileTrue(new Climb(m_robotArm,1));
+     m_driverController.y().whileTrue(new Climb(m_robotArm,-1));
 
-     m_SubdriverController.x().whileTrue(new Telescope(m_robotArm,7));
-     m_SubdriverController.y().whileTrue(new Telescope(m_robotArm,-1 * 7));
+     m_SubdriverController.x().whileTrue(new Telescope(m_robotArm,1));
+     m_SubdriverController.y().whileTrue(new Telescope(m_robotArm,-1));
 
-     m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_robotArm, 16, 3).alongWith(
-      new StagedPitchTarget(m_robotArm, 12, 0))); // L1 scoring and set position to needed for pit
+    //  m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_robotArm, 16, 3).alongWith(
+    //   new StagedPitchTarget(m_robotArm, 12, 0))); // L1 scoring and set position to needed for pit
 
-     m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_robotArm, 65, 3).alongWith(
-      new StagedPitchTarget(m_robotArm, 12, 0))); // L2 scoring and set position to needed for pit
+    //  m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_robotArm, 65, 3).alongWith(
+    //   new StagedPitchTarget(m_robotArm, 12, 0))); // L2 scoring and set position to needed for pit
 
-     m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_robotArm, 45, 3).alongWith(
-      new StagedPitchTarget(m_robotArm, 12, 0))); // L3 scoring and set position to needed for pit
+    //  m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_robotArm, 45, 3).alongWith(
+    //   new StagedPitchTarget(m_robotArm, 12, 0))); // L3 scoring and set position to needed for pit
 
-     m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_robotArm, 0, 3).alongWith(
-      new StagedPitchTarget(m_robotArm, 12, 0))); // intake from station and set position to needed for pit and tele
+    //  m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_robotArm, 0, 3).alongWith(
+    //   new StagedPitchTarget(m_robotArm, 12, 0))); // intake from station and set position to needed for pit and tele
   }
 
 
