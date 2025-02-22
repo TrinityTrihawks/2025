@@ -20,6 +20,7 @@ import frc.robot.commands.WristTurnTarget;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.TeleArm;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -43,6 +44,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final ArmSubsystem m_robotArm = new ArmSubsystem();
   private final Claw m_claw = new Claw();
+  private final TeleArm m_telearm = new TeleArm();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_SubdriverController = new CommandXboxController(0);
@@ -62,8 +64,12 @@ public class RobotContainer {
     configureBindings();
     System.out.print("something");
 
-    autoChooser.setDefaultOption("Default Auto", "Auto Drive");  // Default option
-        autoChooser.addOption("Auto Mode 1", "Full Routine");
+    autoChooser.setDefaultOption("Auto Drive", "Mode1");  // Default option
+        autoChooser.addOption("Full Routine", "Mode2");
+
+        SmartDashboard.putData("Auto Mode Chooser", autoChooser);
+
+        
 
     m_robotDrive.setDefaultCommand(
         new MoveRobot(m_robotDrive, m_driverController));
@@ -74,6 +80,28 @@ public class RobotContainer {
     SmartDashboard.putNumber("Climb Speed", 1);
     SmartDashboard.putNumber("Stage Speed", 1);
   }
+
+  public void getAutoMode() {
+    // Get the selected option from the SendableChooser
+    String selectedMode = autoChooser.getSelected();
+
+    // Handle the selected auto mode
+    switch (selectedMode) {
+         default:
+            // Execute the default auto mode
+            new AutoDrive(m_robotDrive, 2);
+            break;
+          case "Mode1":
+            // Execute Auto Mode 1 code
+            new AutoDrive(m_robotDrive, 2).andThen(
+              new StagedPitchTarget(m_robotArm, 3 ,0.75)).andThen(
+              new WristTurnTarget(m_claw, 0.5, 1)).andThen(
+              new GripperIntake(m_claw, -5));
+                
+            }
+            
+       
+    }
 
   /* This moveRobot() function was moved to the MoveRobot.java command script. */
 
@@ -112,7 +140,7 @@ public class RobotContainer {
     SmartDashboard.putNumber("Pitch Alt Encoder", m_robotArm.get_pitch_encoder2());
     SmartDashboard.putNumber("Wrist Motor Encoder", m_claw.get_wrist_encoder1());
     SmartDashboard.putNumber("Wrist Alt Encoder", m_claw.get_wrist_encoder2());
-    SmartDashboard.putNumber("Tele Motor Encoder", m_robotArm.get_tele_encoder1());
+    SmartDashboard.putNumber("Tele Motor Encoder", m_telearm.get_tele_encoder1());
 
   }
 
@@ -145,20 +173,20 @@ public class RobotContainer {
      m_driverController.x().whileTrue(new Climb(m_robotArm,1));
      m_driverController.y().whileTrue(new Climb(m_robotArm,-1));
 
-     m_SubdriverController.x().whileTrue(new Telescope(m_robotArm,1));
-     m_SubdriverController.y().whileTrue(new Telescope(m_robotArm,-1));
+     m_SubdriverController.x().whileTrue(new Telescope(m_telearm,1));
+     m_SubdriverController.y().whileTrue(new Telescope(m_telearm,-1));
 
-    //  m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_robotArm, 16, 3).alongWith(
-    //   new StagedPitchTarget(m_robotArm, 12, 0))); // L1 scoring and set position to needed for pit
+     m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_telearm, 16, 3).alongWith(
+      new StagedPitchTarget(m_robotArm, 12, 0))); // L1 scoring and set position to needed for pit
 
-    //  m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_robotArm, 65, 3).alongWith(
-    //   new StagedPitchTarget(m_robotArm, 12, 0))); // L2 scoring and set position to needed for pit
+     m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_telearm, 65, 3).alongWith(
+      new StagedPitchTarget(m_robotArm, 12, 0))); // L2 scoring and set position to needed for pit
 
-    //  m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_robotArm, 45, 3).alongWith(
-    //   new StagedPitchTarget(m_robotArm, 12, 0))); // L3 scoring and set position to needed for pit
+     m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_telearm, 45, 3).alongWith(
+      new StagedPitchTarget(m_robotArm, 12, 0))); // L3 scoring and set position to needed for pit
 
-    //  m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_robotArm, 0, 3).alongWith(
-    //   new StagedPitchTarget(m_robotArm, 12, 0))); // intake from station and set position to needed for pit and tele
+     m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_telearm, 0, 3).alongWith(
+      new StagedPitchTarget(m_robotArm, 12, 0))); // intake from station and set position to needed for pit and tele
   }
 
 

@@ -1,15 +1,20 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.TeleArm;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class TelescopeTarget extends Command {
-    private final ArmSubsystem m_subsystem;
+    private final TeleArm m_subsystem;
     private final double target_pos;
     private final double max_output;
     private static final double TOLERANCE = 1;
+    private double LowLim;
+    private double UpLim;
+
   
-    public TelescopeTarget(ArmSubsystem subsystem, double targetPosition, double maxOutput) {
+    public TelescopeTarget(TeleArm subsystem, double targetPosition, double maxOutput) {
       m_subsystem = subsystem;
       target_pos = targetPosition;
       max_output = maxOutput;
@@ -27,11 +32,37 @@ public class TelescopeTarget extends Command {
       double curr_pos = m_subsystem.get_tele_encoder1();
       double error = target_pos - curr_pos;
       double output = calculateOutput(error);
+      double adjustedVel = output;
   
       if (Math.abs(error) <= TOLERANCE) {
         m_subsystem.telescope(0); // Issue hold command
       } else {
-        m_subsystem.telescope(output);
+       double slowZoneRange = 1.0;
+
+    if ((output > 0) && (curr_pos < UpLim)) {
+        if (curr_pos >= UpLim - slowZoneRange) {
+            double distanceToLimit = UpLim - curr_pos;
+            double slowZoneFactor = distanceToLimit / slowZoneRange; // Proportional factor
+            adjustedVel = output * slowZoneFactor;
+            SmartDashboard.putString("LIMIT", "SLOW ZONE");
+        } else {
+            SmartDashboard.putString("LIMIT", "NORMAL ZONE");
+        }
+        m_subsystem.telescope(adjustedVel);
+    } else if ((output < 0) && (curr_pos > LowLim)) {
+        if (curr_pos <= LowLim + slowZoneRange) {
+            double distanceToLimit = curr_pos - LowLim;
+            double slowZoneFactor = distanceToLimit / slowZoneRange; // Proportional factor
+            adjustedVel = output * slowZoneFactor;
+            SmartDashboard.putString("LIMIT", "SLOW ZONE");
+        } else {
+            SmartDashboard.putString("LIMIT", "NORMAL ZONE");
+        }
+        m_subsystem.telescope(adjustedVel);
+    } else {
+        m_subsystem.telescope(0);
+        SmartDashboard.putString("LIMIT", "STOP");
+    }
       }
     }
   

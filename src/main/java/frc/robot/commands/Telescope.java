@@ -4,10 +4,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.TeleArm;
 
 public class Telescope extends Command{
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ArmSubsystem m_subsystem;
+  private final TeleArm m_subsystem;
   private double vel;
   private double curr_pos;
   private double LowLim = 10;
@@ -18,7 +19,7 @@ public class Telescope extends Command{
    *
    * @param subsystem The subsystem used by this command.
    */
-  public Telescope(ArmSubsystem subsystem, double velocity) {
+  public Telescope(TeleArm subsystem, double velocity) {
     m_subsystem = subsystem;
     vel=velocity;
 
