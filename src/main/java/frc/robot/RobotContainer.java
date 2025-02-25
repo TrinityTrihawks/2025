@@ -11,6 +11,7 @@ import frc.robot.commands.Climb;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.GripperIntake;
 import frc.robot.commands.MoveRobot;
+import frc.robot.commands.SlowStrafe;
 import frc.robot.commands.StagedPitch;
 import frc.robot.commands.StagedPitchTarget;
 import frc.robot.commands.Telescope;
@@ -94,6 +95,7 @@ public class RobotContainer {
           case "Mode1":
             // Execute Auto Mode 1 code
             new AutoDrive(m_robotDrive, 2).andThen(
+              new TelescopeTarget(m_telearm, 0.88, 3)).andThen(
               new StagedPitchTarget(m_robotArm, 3 ,0.75)).andThen(
               new WristTurnTarget(m_claw, 0.5, 1)).andThen(
               new GripperIntake(m_claw, -5));
@@ -160,6 +162,13 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+
+    m_driverController.y().whileTrue(new Climb(m_robotArm, m_driverController, 1));
+    m_driverController.x().whileTrue(new Climb(m_robotArm, m_driverController, -1));
+
+    m_driverController.rightBumper().whileTrue(new SlowStrafe(m_robotDrive,0.25));
+    m_driverController.leftBumper().whileTrue(new SlowStrafe(m_robotDrive, -0.25));
+     
      m_SubdriverController.a().whileTrue(new StagedPitch(m_robotArm,12,0));
      m_SubdriverController.b().whileTrue(new StagedPitch(m_robotArm,-12,0.88));
     //  m_SubdriverController.x().whileTrue(new StagedPitch(m_robotArm,pitch_speed,0.63));
@@ -167,11 +176,8 @@ public class RobotContainer {
      m_SubdriverController.leftBumper().whileTrue(new WristTurnTarget(m_claw,0.5, 1));
      m_SubdriverController.rightBumper().whileTrue(new WristTurnTarget(m_claw, 0, 1));
 
-     m_SubdriverController.rightTrigger().whileTrue(new GripperIntake(m_claw,5));
+     m_SubdriverController.rightTrigger().whileTrue(new GripperIntake(m_claw,7));
      m_SubdriverController.leftTrigger().whileTrue(new GripperIntake(m_claw,-5));
-
-     m_driverController.x().whileTrue(new Climb(m_robotArm,1));
-     m_driverController.y().whileTrue(new Climb(m_robotArm,-1));
 
      m_SubdriverController.x().whileTrue(new Telescope(m_telearm,1));
      m_SubdriverController.y().whileTrue(new Telescope(m_telearm,-1));

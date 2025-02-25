@@ -1,12 +1,15 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Claw;
 
 public class Climb extends Command{
     private final ArmSubsystem m_subsystem;
+    private final CommandXboxController controller;
   private double vel;
   private double curr_pos;
   private double UpLim = 0;
@@ -17,9 +20,10 @@ public class Climb extends Command{
    *
    * @param subsystem The subsystem used by this command.
    */
-  public Climb(ArmSubsystem subsystem, double velocity) {
+  public Climb(ArmSubsystem subsystem, CommandXboxController driverController, double velocity) {
     m_subsystem = subsystem;
     vel=velocity;
+    controller = driverController;
 
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -62,10 +66,13 @@ public class Climb extends Command{
         m_subsystem.climb(adjustedVel);
     } else {
         m_subsystem.climb(0);
+        controller.setRumble(XboxController.RumbleType.kLeftRumble, 1.0); // Full intensity on left motor
+        controller.setRumble(XboxController.RumbleType.kRightRumble, 1.0); // Full intensity on right motor
+    }
         SmartDashboard.putString("LIMIT", "STOP");
     }
     
-  }
+  
 
   // Called once the command ends or is interrupted.
   @Override
@@ -79,5 +86,6 @@ public class Climb extends Command{
     return false;
   }
 }
+
 
 
