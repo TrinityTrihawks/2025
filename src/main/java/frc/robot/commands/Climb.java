@@ -12,8 +12,8 @@ public class Climb extends Command{
     private final CommandXboxController controller;
   private double vel;
   private double curr_pos;
-  private double UpLim = 0;
-  private double LowLim = 10;
+  private double UpLim;
+  private double LowLim;
 
   /**
    * Creates a new ExampleCommand.
@@ -66,8 +66,8 @@ public class Climb extends Command{
         m_subsystem.climb(adjustedVel);
     } else {
         m_subsystem.climb(0);
-        controller.setRumble(XboxController.RumbleType.kLeftRumble, 1.0); // Full intensity on left motor
-        controller.setRumble(XboxController.RumbleType.kRightRumble, 1.0); // Full intensity on right motor
+        // controller.setRumble(XboxController.RumbleType.kLeftRumble, 1.0); // Full intensity on left motor
+        // controller.setRumble(XboxController.RumbleType.kRightRumble, 1.0); // Full intensity on right motor
     }
         SmartDashboard.putString("LIMIT", "STOP");
     }

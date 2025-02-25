@@ -17,7 +17,7 @@ public class StagedPitchTarget extends Command {
   private final double max_output;
   private static final double TOLERANCE = 0.005;
   private double LowLim;
-  private double UpLim;
+  private double UpLim ;
 
   /**
    * Creates a new ExampleCommand.
