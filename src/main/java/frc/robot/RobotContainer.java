@@ -142,8 +142,8 @@ public class RobotContainer {
      m_SubdriverController.b().whileTrue(new StagedPitch(m_robotArm,-12,0.88));
     //  m_SubdriverController.x().whileTrue(new StagedPitch(m_robotArm,pitch_speed,0.63));
 
-     m_SubdriverController.leftBumper().whileTrue(new WristTurnTarget(m_claw,0.5, 1)); // Motor: Low 0 Up 3.6 || Abs;
-     m_SubdriverController.rightBumper().whileTrue(new WristTurnTarget(m_claw, 0.25, 1)); // Motor: Low 0 Up 3.6 || Abs;
+     m_SubdriverController.leftBumper().whileTrue(new WristTurnTarget(m_claw,0.5, 2.5)); // Motor: Low 0 Up 3.6 || Abs;
+     m_SubdriverController.rightBumper().whileTrue(new WristTurnTarget(m_claw, 0.23, 2.5)); // Motor: Low 0 Up 3.6 || Abs;
 
      m_SubdriverController.rightTrigger().whileTrue(new GripperIntake(m_claw,-7));
      m_SubdriverController.leftTrigger().whileTrue(new GripperIntake(m_claw,5));
@@ -172,8 +172,8 @@ public class RobotContainer {
    */
   Command autoRoutine () {
     return new AutoDrive(m_robotDrive, 2).andThen(
-      new StagedPitchTarget(m_robotArm, 3 ,0.75)).andThen(
-      new WristTurnTarget(m_claw, 0.5, 1)).andThen(
+      new StagedPitchTarget(m_robotArm, 12 ,0.3)).andThen(
+      new WristTurnTarget(m_claw, 0.5, 3)).andThen(
       new GripperIntake(m_claw, -5));
     
   }

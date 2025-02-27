@@ -62,7 +62,7 @@ public class StagedPitchTarget extends Command {
         } else {
             SmartDashboard.putString("LIMIT", "NORMAL ZONE");
         }
-        m_subsystem.climb(adjustedVel);
+        m_subsystem.staged_pitch(adjustedVel);
     } else if ((output < 0) && (curr_pos > LowLim)) {
         if (curr_pos <= LowLim + slowZoneRange) {
             double distanceToLimit = curr_pos - LowLim;
@@ -72,9 +72,9 @@ public class StagedPitchTarget extends Command {
         } else {
             SmartDashboard.putString("LIMIT", "NORMAL ZONE");
         }
-        m_subsystem.climb(adjustedVel);
+        m_subsystem.staged_pitch(adjustedVel);
     } else {
-        m_subsystem.climb(0);
+        m_subsystem.staged_pitch(0);
         SmartDashboard.putString("LIMIT", "STOP");
     }
       }

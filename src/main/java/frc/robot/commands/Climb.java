@@ -13,7 +13,7 @@ public class Climb extends Command{
   private double vel;
   private double curr_pos;
   private double UpLim = -0.85; // 0.85
-  private double LowLim = -0.96; // 0.96
+  private double LowLim = -.983; // 0.98
 
   /**
    * Creates a new ExampleCommand.
