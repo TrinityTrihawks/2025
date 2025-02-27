@@ -42,12 +42,12 @@ public class StagedPitch extends Command {
   public void execute() {
     curr_pos = m_subsystem.get_pitch_encoder2();
     double adjustedVel = vel;
-    double slowZoneRange = 1.0;
+    double slowZoneRange = 0.01;
 
     if ((vel > 0) && (curr_pos < UpLim)) {
         if (curr_pos >= UpLim - slowZoneRange) {
             double distanceToLimit = UpLim - curr_pos;
-            double slowZoneFactor = distanceToLimit / slowZoneRange; // Proportional factor
+            double slowZoneFactor = distanceToLimit; // Proportional factor
             adjustedVel = vel * slowZoneFactor;
         }
         m_subsystem.staged_pitch(adjustedVel);

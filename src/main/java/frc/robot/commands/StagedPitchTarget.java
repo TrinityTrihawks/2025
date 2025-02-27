@@ -51,12 +51,12 @@ public class StagedPitchTarget extends Command {
         double adjustedVel = output;
 
     // Define the slow zone range
-    double slowZoneRange = 1.0;
+    double slowZoneRange = 0.01;
 
     if ((output > 0) && (curr_pos < UpLim)) {
         if (curr_pos >= UpLim - slowZoneRange) {
             double distanceToLimit = UpLim - curr_pos;
-            double slowZoneFactor = distanceToLimit / slowZoneRange; // Proportional factor
+            double slowZoneFactor = distanceToLimit; // Proportional factor
             adjustedVel = output * slowZoneFactor;
             SmartDashboard.putString("LIMIT", "SLOW ZONE");
         } else {
