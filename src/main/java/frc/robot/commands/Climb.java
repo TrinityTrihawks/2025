@@ -12,8 +12,8 @@ public class Climb extends Command{
     private final CommandXboxController controller;
   private double vel;
   private double curr_pos;
-  private double UpLim = 1000; // 0.7
-  private double LowLim = -1000; // 0.8
+  private double UpLim = -0.85; // 0.85
+  private double LowLim = -0.96; // 0.96
 
   /**
    * Creates a new ExampleCommand.

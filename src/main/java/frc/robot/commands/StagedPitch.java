@@ -16,8 +16,8 @@ public class StagedPitch extends Command {
   private final ArmSubsystem m_subsystem;
   private double vel;
   private double curr_pos;
-  private double LowLim = -1000;
-  private double UpLim = 1000;
+  private double LowLim = 0.16; // 0.5
+  private double UpLim = 0.5; // 0.16
   /**
    * Creates a new ExampleCommand.
    *
