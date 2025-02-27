@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -17,8 +18,18 @@ import frc.robot.subsystems.ArmSubsystem;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
+  private SendableChooser<Command> autoChooser;
   private final RobotContainer m_robotContainer;
+
+  @Override
+  public void robotInit() {
+    autoChooser = new SendableChooser<>();
+
+    autoChooser.setDefaultOption("Drive Backwards", m_robotContainer.AutoLeave());
+    autoChooser.addOption("Full Routine", m_robotContainer.autoRoutine());
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+  }
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -56,12 +67,11 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_robotContainer.getAutoMode();
-    // Command autoCommand = m_robotContainer.autoCommand();
+    Command autoCommand = autoChooser.getSelected();
 
-    // if (autoCommand != null) {
-    //   autoCommand.schedule();
-    // }
+    if (autoCommand != null) {
+      autoCommand.schedule();
+    }
   }
 
   /** This function is called periodically during autonomous. */

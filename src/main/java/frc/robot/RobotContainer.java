@@ -63,14 +63,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger00 bindings
     configureBindings();
-    System.out.print("something");
-
-    autoChooser.setDefaultOption("Auto Drive", "Mode1");  // Default option
-        autoChooser.addOption("Full Routine", "Mode2");
-
-        SmartDashboard.putData("Auto Mode Chooser", autoChooser);
-
-        
 
     m_robotDrive.setDefaultCommand(
         new MoveRobot(m_robotDrive, m_driverController));
@@ -80,29 +72,6 @@ public class RobotContainer {
     SmartDashboard.putNumber("Output Speed", 1);
     SmartDashboard.putNumber("Climb Speed", 1);
     SmartDashboard.putNumber("Stage Speed", 1);
-  }
-
-  public void getAutoMode() {
-    // Get the selected option from the SendableChooser
-    String selectedMode = autoChooser.getSelected();
-
-    // Handle the selected auto mode
-    switch (selectedMode) {
-         default:
-            // Execute the default auto mode
-            new AutoDrive(m_robotDrive, 2);
-            break;
-          case "Mode1":
-            // Execute Auto Mode 1 code
-            new AutoDrive(m_robotDrive, 2).andThen(
-              new TelescopeTarget(m_telearm, 0.88, 3)).andThen(
-              new StagedPitchTarget(m_robotArm, 3 ,0.75)).andThen(
-              new WristTurnTarget(m_claw, 0.5, 1)).andThen(
-              new GripperIntake(m_claw, -5));
-                
-            }
-            
-       
     }
 
   /* This moveRobot() function was moved to the MoveRobot.java command script. */
@@ -163,8 +132,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
-    m_driverController.y().whileTrue(new Climb(m_robotArm, m_driverController, 1));
-    m_driverController.x().whileTrue(new Climb(m_robotArm, m_driverController, -1));
+    m_driverController.y().whileTrue(new Climb(m_robotArm, m_driverController, 6));
+    m_driverController.x().whileTrue(new Climb(m_robotArm, m_driverController, -6));
 
     m_driverController.rightBumper().whileTrue(new SlowStrafe(m_robotDrive,0.25));
     m_driverController.leftBumper().whileTrue(new SlowStrafe(m_robotDrive, -0.25));
@@ -173,26 +142,26 @@ public class RobotContainer {
      m_SubdriverController.b().whileTrue(new StagedPitch(m_robotArm,-12,0.88));
     //  m_SubdriverController.x().whileTrue(new StagedPitch(m_robotArm,pitch_speed,0.63));
 
-     m_SubdriverController.leftBumper().whileTrue(new WristTurnTarget(m_claw,0.5, 1));
-     m_SubdriverController.rightBumper().whileTrue(new WristTurnTarget(m_claw, 0, 1));
+     m_SubdriverController.leftBumper().whileTrue(new WristTurnTarget(m_claw,0.5, 1)); // Motor: Low 0 Up 3.6 || Abs;
+     m_SubdriverController.rightBumper().whileTrue(new WristTurnTarget(m_claw, 0.25, 1)); // Motor: Low 0 Up 3.6 || Abs;
 
-     m_SubdriverController.rightTrigger().whileTrue(new GripperIntake(m_claw,7));
-     m_SubdriverController.leftTrigger().whileTrue(new GripperIntake(m_claw,-5));
+     m_SubdriverController.rightTrigger().whileTrue(new GripperIntake(m_claw,-7));
+     m_SubdriverController.leftTrigger().whileTrue(new GripperIntake(m_claw,5));
 
-     m_SubdriverController.x().whileTrue(new Telescope(m_telearm,1));
-     m_SubdriverController.y().whileTrue(new Telescope(m_telearm,-1));
+     m_SubdriverController.y().whileTrue(new Telescope(m_telearm,6));
+     m_SubdriverController.x().whileTrue(new Telescope(m_telearm,-6));
 
-     m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_telearm, 21.4, 3).alongWith(
-      new StagedPitchTarget(m_robotArm, 12, 0.42))); // L1 scoring and set position to needed for pit
+    //  m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_telearm, 21.4, 3).alongWith(
+    //   new StagedPitchTarget(m_robotArm, 12, 0.42))); // L1 scoring and set position to needed for pit
 
-     m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_telearm, 79.95, 3).alongWith(
-      new StagedPitchTarget(m_robotArm, 12, 0.37))); // L2 scoring and set position to needed for pit
+    //  m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_telearm, 79.95, 3).alongWith(
+    //   new StagedPitchTarget(m_robotArm, 12, 0.37))); // L2 scoring and set position to needed for pit
 
-     m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_telearm, 60.8, 3).alongWith(
-      new StagedPitchTarget(m_robotArm, 12, 0.24))); // L3 scoring and set position to needed for pit
+    //  m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_telearm, 60.8, 3).alongWith(
+    //   new StagedPitchTarget(m_robotArm, 12, 0.24))); // L3 scoring and set position to needed for pit
 
-     m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_telearm, 54.66, 3).alongWith(
-      new StagedPitchTarget(m_robotArm, 12, 0.359))); // intake from station and set position to needed for pit and tele
+    //  m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_telearm, 54.66, 3).alongWith(
+    //   new StagedPitchTarget(m_robotArm, 12, 0.359))); // intake from station and set position to needed for pit and tele
   }
 
 
@@ -209,7 +178,7 @@ public class RobotContainer {
     
   }
   Command AutoLeave() {
-    return new AutoDrive(m_robotDrive, 2);
+        return new AutoDrive(m_robotDrive, 2);
   }
   
 }

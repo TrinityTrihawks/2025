@@ -11,8 +11,8 @@ public class Telescope extends Command{
   private final TeleArm m_subsystem;
   private double vel;
   private double curr_pos;
-  private double LowLim = 10;
-  private double UpLim = 15;
+  private double LowLim = 0; // 0
+  private double UpLim = 77; // 70
 
   /**
    * Creates a new ExampleCommand.

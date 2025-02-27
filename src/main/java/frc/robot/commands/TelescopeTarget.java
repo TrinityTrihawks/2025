@@ -10,8 +10,8 @@ public class TelescopeTarget extends Command {
     private final double target_pos;
     private final double max_output;
     private static final double TOLERANCE = 1;
-    private double LowLim;
-    private double UpLim;
+    private double LowLim = 0;
+    private double UpLim = 77;
 
   
     public TelescopeTarget(TeleArm subsystem, double targetPosition, double maxOutput) {

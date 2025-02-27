@@ -12,8 +12,8 @@ public class Climb extends Command{
     private final CommandXboxController controller;
   private double vel;
   private double curr_pos;
-  private double UpLim;
-  private double LowLim;
+  private double UpLim = 1000; // 0.7
+  private double LowLim = -1000; // 0.8
 
   /**
    * Creates a new ExampleCommand.
@@ -38,39 +38,44 @@ public class Climb extends Command{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    curr_pos = m_subsystem.get_climb_encoder2();
+    curr_pos = -m_subsystem.get_climb_encoder2();
+    SmartDashboard.putNumber("curr_pos", curr_pos);
+    SmartDashboard.putNumber("vel", vel);
      double adjustedVel = vel;
 
     // Define the slow zone range
-    double slowZoneRange = 1.0;
+    double slowZoneRange = 0.001;
 
     if ((vel > 0) && (curr_pos < UpLim)) {
         if (curr_pos >= UpLim - slowZoneRange) {
             double distanceToLimit = UpLim - curr_pos;
-            double slowZoneFactor = distanceToLimit / slowZoneRange; // Proportional factor
+            double slowZoneFactor = distanceToLimit; // Proportional factor
             adjustedVel = vel * slowZoneFactor;
             SmartDashboard.putString("LIMIT", "SLOW ZONE");
         } else {
             SmartDashboard.putString("LIMIT", "NORMAL ZONE");
         }
-        m_subsystem.climb(adjustedVel);
+        // m_subsystem.climb(adjustedVel);
     } else if ((vel < 0) && (curr_pos > LowLim)) {
         if (curr_pos <= LowLim + slowZoneRange) {
             double distanceToLimit = curr_pos - LowLim;
-            double slowZoneFactor = distanceToLimit / slowZoneRange; // Proportional factor
+            double slowZoneFactor = distanceToLimit; // Proportional factor
             adjustedVel = vel * slowZoneFactor;
             SmartDashboard.putString("LIMIT", "SLOW ZONE");
         } else {
             SmartDashboard.putString("LIMIT", "NORMAL ZONE");
         }
-        m_subsystem.climb(adjustedVel);
+        // m_subsystem.climb(adjustedVel);
     } else {
-        m_subsystem.climb(0);
+        adjustedVel = 0;
+        // m_subsystem.climb(0);
         // controller.setRumble(XboxController.RumbleType.kLeftRumble, 1.0); // Full intensity on left motor
         // controller.setRumble(XboxController.RumbleType.kRightRumble, 1.0); // Full intensity on right motor
     }
-        SmartDashboard.putString("LIMIT", "STOP");
-    }
+    m_subsystem.climb(adjustedVel);
+    SmartDashboard.putNumber("adjustedVel", adjustedVel);
+    SmartDashboard.putString("LIMIT", "STOP");
+  }
     
   
 

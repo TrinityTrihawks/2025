@@ -24,7 +24,7 @@ public class Claw extends SubsystemBase {
   
   private final SparkMax m_wrist = new SparkMax(17, MotorType.kBrushless);
   private RelativeEncoder wrist_encoder1;
-  private RelativeEncoder wrist_encoder2;
+  private AbsoluteEncoder wrist_encoder2;
   
   // Set default brake mode
   private SparkMaxConfig wristConfig = new SparkMaxConfig();
@@ -32,7 +32,7 @@ public class Claw extends SubsystemBase {
   public Claw() {
     grip_encoder = m_grip.getEncoder();
     wrist_encoder1 = m_wrist.getEncoder();
-    wrist_encoder2 = m_wrist.getAlternateEncoder();
+    wrist_encoder2 = m_wrist.getAbsoluteEncoder();
     wristConfig.idleMode(IdleMode.kBrake);
     m_wrist.configure(wristConfig, null, PersistMode.kPersistParameters);
   }
