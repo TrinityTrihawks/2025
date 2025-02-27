@@ -151,17 +151,16 @@ public class RobotContainer {
      m_SubdriverController.y().whileTrue(new Telescope(m_telearm,6));
      m_SubdriverController.x().whileTrue(new Telescope(m_telearm,-6));
 
-    //  m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_telearm, 21.4, 3).alongWith(
-    //   new StagedPitchTarget(m_robotArm, 12, 0.42))); // L1 scoring and set position to needed for pit
+     m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_telearm, 11.83, 3)); // L1 scoring and set position to needed for pit
 
-    //  m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_telearm, 79.95, 3).alongWith(
-    //   new StagedPitchTarget(m_robotArm, 12, 0.37))); // L2 scoring and set position to needed for pit
+     m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_telearm, 75.02, 3)); // L2 scoring and set position to needed for pit
 
-    //  m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_telearm, 60.8, 3).alongWith(
-    //   new StagedPitchTarget(m_robotArm, 12, 0.24))); // L3 scoring and set position to needed for pit
+     m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_telearm, 67.4, 3)); // L3 scoring and set position to needed for pit
 
-    //  m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_telearm, 54.66, 3).alongWith(
-    //   new StagedPitchTarget(m_robotArm, 12, 0.359))); // intake from station and set position to needed for pit and tele
+     m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_telearm, 65.76, 3).alongWith(
+      new StagedPitchTarget(m_robotArm,12,0.35)));
+  
+     // intake from station and set position to needed for pit and tele
   }
 
 
@@ -172,7 +171,8 @@ public class RobotContainer {
    */
   Command autoRoutine () {
     return new AutoDrive(m_robotDrive, 2).andThen(
-      new StagedPitchTarget(m_robotArm, 12 ,0.3)).andThen(
+      new StagedPitchTarget(m_robotArm, 12 ,0.42)).andThen(
+      new TelescopeTarget(m_telearm, 11.83, 6)).andThen(
       new WristTurnTarget(m_claw, 0.5, 3)).andThen(
       new GripperIntake(m_claw, -5));
     
