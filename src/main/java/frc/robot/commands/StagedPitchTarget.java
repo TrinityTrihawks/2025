@@ -43,7 +43,7 @@ public class StagedPitchTarget extends Command {
   public void execute() {
     double curr_pos = m_subsystem.get_pitch_encoder2();
       double error = target_pos - curr_pos;
-      double output = calculateOutput(error);
+      double output = max_output;
   
       if (Math.abs(error) <= TOLERANCE) {
         m_subsystem.staged_pitch(0); // Issue hold command
@@ -51,7 +51,7 @@ public class StagedPitchTarget extends Command {
         double adjustedVel = output;
 
     // Define the slow zone range
-    double slowZoneRange = 0.01;
+    double slowZoneRange = 0.05;
 
     if ((output > 0) && (curr_pos < UpLim)) {
         if (curr_pos >= UpLim - slowZoneRange) {
@@ -66,7 +66,7 @@ public class StagedPitchTarget extends Command {
     } else if ((output < 0) && (curr_pos > LowLim)) {
         if (curr_pos <= LowLim + slowZoneRange) {
             double distanceToLimit = curr_pos - LowLim;
-            double slowZoneFactor = distanceToLimit / slowZoneRange; // Proportional factor
+            double slowZoneFactor = distanceToLimit; // Proportional factor
             adjustedVel = output * slowZoneFactor;
             SmartDashboard.putString("LIMIT", "SLOW ZONE");
         } else {
@@ -96,7 +96,7 @@ public class StagedPitchTarget extends Command {
   // Calculate the motor output based on the error
   private double calculateOutput(double error) {
     // Simple proportional control
-    double kP = 50.0; // Proportional gain, adjust as needed
+    double kP = 150.0; // Proportional gain, adjust as needed
     double output = kP * error;
     // Limit the output to the maximum output
     if (output > max_output) {

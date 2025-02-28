@@ -22,7 +22,7 @@ public class AutoDrive extends Command{
     }
     @Override
     public void execute() {
-        driveSubsystem.drive(0.2,0,0);
+        driveSubsystem.drive(0.35,0,0);
     }
     @Override
     public boolean isFinished() {
