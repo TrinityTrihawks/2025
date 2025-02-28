@@ -151,14 +151,22 @@ public class RobotContainer {
      m_SubdriverController.y().whileTrue(new Telescope(m_telearm,6));
      m_SubdriverController.x().whileTrue(new Telescope(m_telearm,-6));
 
-     m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_telearm, 11.83, 3)); // L1 scoring and set position to needed for pit
+     m_SubdriverController.povDown().whileTrue(new TelescopeTarget(m_telearm, 11.83, 6)
+     .alongWith(new WristTurnTarget(m_claw, 0.5, 2.5))
+     .alongWith(new StagedPitchTarget(m_robotArm, 12, 0.42))); // L1 scoring and set position to needed for pit
 
-     m_SubdriverController.povLeft().whileTrue(new TelescopeTarget(m_telearm, 75.02, 3)); // L2 scoring and set position to needed for pit
+     m_SubdriverController.povLeft().whileTrue(
+      new TelescopeTarget(m_telearm, 75.02, 6)
+      .alongWith(new WristTurnTarget(m_claw, 0.23, 2.5))
+      
+      ); // L2 scoring and set position to needed for pit
 
-     m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_telearm, 67.4, 3)); // L3 scoring and set position to needed for pit
+     m_SubdriverController.povUp().whileTrue(new TelescopeTarget(m_telearm, 67.4, 6)
+     .alongWith(new WristTurnTarget(m_claw, 0.23, 2.5))
+     .alongWith(new StagedPitchTarget(m_robotArm, 12, 0.259))); // L3 scoring and set position to needed for pit
 
-     m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_telearm, 65.76, 3).alongWith(
-      new StagedPitchTarget(m_robotArm,12,0.35)));
+     m_SubdriverController.povRight().whileTrue(new TelescopeTarget(m_telearm, 65.76, 6).alongWith(
+      new StagedPitchTarget(m_robotArm,12,0.35)).alongWith(new WristTurnTarget(m_claw, 0.5, 2.5)));
   
      // intake from station and set position to needed for pit and tele
   }
